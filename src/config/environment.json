@@ -1,0 +1,40 @@
+{
+  "server": {
+    "address": "127.0.0.1",
+    "port": 8001
+  },
+  "authentication": {
+    "native": {
+      "bcryptHashRounds": 12,
+      "create": {
+        "acceptFields": {
+          "firstName": "fn",
+          "lastName": "ln",
+          "phone": "ph"
+        }
+      }
+    },
+    "jwt": {
+      "audiences": {
+        "donation.illuminations.bible": "pJ2@Ymf5#3v53%iKj7vY^G#Qdt&mEnBf"
+      },
+      "key": "%o9*rMlaU#nm*1m%x!8FSvnqil#$#wsk",
+      "exp": "48h",
+      "fields": {
+        "fn": "firstName",
+        "ln": "lastName",
+        "_id": "id",
+        "cid": "stid",
+        "sfid": "sfid"
+      },
+      "issuer": "profile.illuminations.bible"
+    }
+  },
+  "customAuth": {
+    "sisense": {
+      "audience": "score.seedconnect.com",
+      "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoiNTgwOGJkNmQ4MTBjMGFjNGQ4OGFkYTQ1IiwiYXBpU2VjcmV0IjoiOGM1YmRhMDktOWI5MS02OGQ0LTk5OTMtZTA3YzNkMzQ1ZTYyIiwiaWF0IjoxNTAwOTE3MjE3fQ.iuxACmlvfevrZo5ja9ugRxkIwcb8FSi32zcX8kcOC_8"
+    }
+  },
+  "sisenseProxyHackConfig": "https://score.seedconnect.com/api/elasticubes/IBAPI"
+}
