@@ -128,80 +128,15 @@ export class Bootstrap {
   async onBeforeUserCreate(req: Request, res: Response, next: NextFunction) {
     debug('onBeforeUserCreate called');
     console.log('onBeforeUserCreate called -================');
-    const resLocals = res.locals as IRoutableLocals;
-
-    if (!resLocals.reqBody.email || !isValidEmail(resLocals.reqBody.email)) {
-      res
-        .status(INVALID_BODY_PARAMETER)
-        .json({
-          error: 'invalid_body',
-          field: 'email'
-        });
-      return;
-    }
-
-    if (!resLocals.reqBody.firstName || resLocals.reqBody.firstName === '') {
-      res
-        .status(INVALID_BODY_PARAMETER)
-        .json({
-          error: 'invalid_body',
-          field: 'firstName'
-        });
-      return;
-    }
-
-    if (!resLocals.reqBody.password || resLocals.reqBody.password === '') {
-      res
-        .status(INVALID_BODY_PARAMETER)
-        .json({
-          error: 'invalid_body',
-          field: 'password'
-        });
-      return;
-    }
-
-    try {
-      const user = UserModel.fromJson(resLocals.reqBody);
-
-      const userAlreadyExists = {};
-
-      if (userAlreadyExists) {
-        // chicke and egg problem... Auth service hasn't attempted to create the user yet, so it hasn't
-        // had a change to 409 if the user already exists. So, manually check to prevent attempting to
-        // create an SF and Stripe user if the user already exists.
-        debug('user already exists, skipping Salesforce and Stripe setup');
-        next();
-        return;
-      }
-
-      next();
-    } catch (err) {
-      if (err === SERVICE_UNAVAILABLE) {
-        res
-          .status(SERVICE_UNAVAILABLE)
-          .json({
-            error: 'SERVICE_UNAVAILABLE',
-            note: 'This is likely due to a service outage outside of our control. Try again in a bit.'
-          });
-        return;
-      }
-
-      res
-        .status(SERVER_ERROR)
-        .json({
-          error: 'SERVER_ERROR'
-        });
-      this.log.error('SakuraApi.onBeforeUserCreate sent SERVER_ERROR', err);
-      return;
-    }
+    return next();
   }
 
   async onChangePasswordEmailRequest(user: any, req: Request, res: Response): Promise<any> {
-    (this.emailService as any).onChangePasswordEmailRequest(...arguments);
+    // (this.emailService as any).onChangePasswordEmailRequest(...arguments);
   }
 
   async onForgotPasswordEmailRequest(user: any, token: string, req: Request, res: Response): Promise<any> {
-    (this.emailService as any).onForgotPasswordEmailRequest(...arguments);
+    // (this.emailService as any).onForgotPasswordEmailRequest(...arguments);
   }
 
   async onLoginSuccess(user: any, jwt: any, sa: SakuraApi, req: Request, res: Response): Promise<void> {
@@ -211,7 +146,7 @@ export class Bootstrap {
 
   async onResendEmailConfirmation(user: any, token: string, req: Request, res: Response): Promise<any> {
     debug('onResendEmailConfirmation called');
-    (this.emailService as any).onResendEmailConfirmation(...arguments);
+    // (this.emailService as any).onResendEmailConfirmation(...arguments);
   }
 
   async onUserCreated(user: any, token: string, req: Request, res: Response): Promise<any> {
@@ -227,12 +162,15 @@ export class Bootstrap {
     // userModel.stripeCustomerId = resLocals.userMeta.stripeId;
 
     await userModel.save();
-    await this.onUserCreatedSendWelcomeEmail(userModel, token, req, res)
-      .catch((err) => this.log.error('SakuraApi.onUserCreated error when sending welcome email', err));
+    res
+      .status(200)
+      .json({user: user, token: token});
+    // await this.onUserCreatedSendWelcomeEmail(userModel, token, req, res)
+    //   .catch((err) => this.log.error('SakuraApi.onUserCreated error when sending welcome email', err));
   }
 
   async onUserCreatedSendWelcomeEmail(user: any, token: string, req: Request, res: Response): Promise<void> {
-    (this.emailService as any).onUserCreated(...arguments);
+    // (this.emailService as any).onUserCreated(...arguments);
     console.log('user created && email sented -================');
   }
 

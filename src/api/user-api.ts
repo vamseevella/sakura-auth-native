@@ -63,42 +63,4 @@ export class UserApi extends SapiRoutableMixin() {
   //
   //   next();
   // }
-  //
-  // @Route({
-  //   after: [putRouteHandler],
-  //   method: 'put',
-  //   path: ':id'
-  // })
-  // saveUser(req: Request, res: Response, next: NextFunction) {
-  //   const id = req.params.id;
-  //   const jwt = res.locals.jwt || {};
-  //   const resLocals = res.locals as IRoutableLocals;
-  //
-  //   // make sure the user can only update him/her self
-  //   if (jwt.id !== id) {
-  //     res
-  //       .status(FORBIDDEN)
-  //       .json({error: 'FORBIDDEN'});
-  //     return next();
-  //   }
-  //
-  //   // Check to see if the address has been modified,
-  //   // if it has, update stripe and salesforce... otherwise,
-  //   // skip directly to updating the user using the [putRouteHandler]
-  //   UserModel
-  //     .getById(id)
-  //     .then((user) => {
-  //       res
-  //         .status(200)
-  //         .json(user);
-  //       return next();
-  //     })
-  //     .then(() => next())
-  //     .catch((err) => {
-  //       res
-  //         .status(SERVER_ERROR)
-  //         .json({error: 'SERVER_ERROR'});
-  //       return next();
-  //     });
-  // }
 }

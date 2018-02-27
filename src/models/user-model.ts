@@ -114,14 +114,14 @@ export class Address {
   dbConfig: dbs.user
 })
 export class UserModel extends SapiModelMixin() {
-  @Db({field: 'address', model: Address}) @Json()
-  mailingAddress = new Address();
+  // @Db({field: 'address', model: Address}) @Json()
+  // mailingAddress = new Address();
 
   @Db() @Json()
   domain = 'default';
 
-  @Db({field: 'mdonor'}) @Json()
-  majorDonor = false;
+  // @Db({field: 'mdonor'}) @Json()
+  // majorDonor = false;
 
   @Db() @Json()
   email: string;
@@ -153,10 +153,10 @@ export class UserModel extends SapiModelMixin() {
   @Db() @Json()
   phone: string;
 
-  @Db('sfid') @Json()
-  salesForceId: string = null;
-
-  @Db('cid') @Json()
-  stripeCustomerId: string = null;
+  // @Db('sfid') @Json()
+  // salesForceId: string = null;
+  //
+  // @Db('cid') @Json()
+  // stripeCustomerId: string = null;
 }
 
